@@ -1,9 +1,9 @@
 /* ==========================================================
-   Python Quiz (Lesson 1 - PYT103) — 40 Questions
-   ✅ MCQ + True/False only
-   ✅ Instant correction + colors + explanation + page number
-   ✅ Show score first after each answer + final score
-   ✅ Anonymous: auto Session Code (no name)
+   STA104 Quiz — 40 Questions (MCQ + True/False only)
+   ✅ NO text/essay questions (حوّلت 31–40 إلى اختيارات)
+   ✅ Instant correction + colors + explanation
+   ✅ Score shown first after each answer + final score
+   ✅ Anonymous: Session Code only
    ----------------------------------------------------------
    Requires in index.html:
    #question  #answers  #result  #nextBtn
@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", function () {
   var elResult = document.getElementById("result");
   var btnNext = document.getElementById("nextBtn");
 
-  // If required elements are missing
   if (!elQuestion || !elAnswers || !elResult || !btnNext) {
     document.body.innerHTML =
       '<div style="direction:rtl;font-family:Arial;padding:16px;line-height:1.8">' +
@@ -25,66 +24,300 @@ document.addEventListener("DOMContentLoaded", function () {
       "<p>تأكد من وجود العناصر التالية بالـ IDs:</p>" +
       '<pre style="background:#111;color:#fff;padding:12px;border-radius:10px">' +
       "#question\n#answers\n#result\n#nextBtn" +
-      "</pre>" +
-      "</div>";
+      "</pre></div>";
     return;
   }
-
-  // Ensure Next button is clickable (script controls disable/enable)
-  btnNext.disabled = true;
 
   // Anonymous session code
   var sessionCode = "S-" + Math.random().toString(36).slice(2, 8).toUpperCase();
 
-  // 40 Questions bank (as provided)
+  // =========================
+  // Questions (40) — MCQ + T/F
+  // =========================
   var questions = [
-    { q: "الحاسب لا يفهم مباشرة إلا لغة واحدة هي لغة الآلة (Machine Language).", choices: ["صح", "خطأ"], correct: 0, explain: "المنهج يذكر أن الحاسب يفهم لغة واحدة للتعامل معه وهي لغة الآلة.", page: 9 },
-    { q: "لغة الآلة تتكون من الرمزين (0 و 1).", choices: ["صح", "خطأ"], correct: 0, explain: "مذكور أن لغة الآلة مكوّنة من رمزين فقط (0,1).", page: 9 },
-    { q: "أهمية لغات البرمجة أنها تُبسّط التواصل بين المبرمج والحاسب بدل التعامل المباشر مع (0 و1).", choices: ["صح", "خطأ"], correct: 0, explain: "نستخدم لغات البرمجة لتبسيط التواصل بين المبرمج والحاسب.", page: 9 },
-    { q: "لغات البرمجة عالية المستوى قريبة من لغة الإنسان وتسهّل كتابة البرامج وقراءتها.", choices: ["صح", "خطأ"], correct: 0, explain: "اللغات عالية المستوى قريبة من لغة الإنسان وتسهّل كتابة البرامج وقراءتها.", page: 11 },
-    { q: "البرنامج المكتوب بلغة عالية المستوى يُسمى (Source Code / Source Program).", choices: ["صح", "خطأ"], correct: 0, explain: "المنهج يذكر أن البرنامج المكتوب باللغات عالية المستوى يسمى Source Code/Program.", page: 12 },
-    { q: "حتى يتم تنفيذ البرنامج يجب ترجمته إلى لغة الآلة.", choices: ["صح", "خطأ"], correct: 0, explain: "البرنامج يجب أن يُترجم إلى لغة الآلة حتى يُنفذ.", page: 12 },
-    { q: "الأداة التي تُستخدم لترجمة البرنامج إلى لغة الآلة هي:", choices: ["الطابعة", "المترجم Compiler أو المفسر Interpreter", "لوحة المفاتيح", "الشاشة"], correct: 1, explain: "الترجمة تتم باستخدام Compiler أو Interpreter.", page: 12 },
-    { q: "اللغة منخفضة المستوى تكون:", choices: ["قريبة من العتاد وتمنح تحكمًا أدق لكنها أصعب", "قريبة جدًا من لغة الإنسان وسهلة جدًا", "لا تحتاج ترجمة للآلة", "لا علاقة لها بالذاكرة والمسجلات"], correct: 0, explain: "منخفضة المستوى قريبة من العتاد وتحكمها أدق لكنها أصعب وأقل قابلية للنقل.", page: 13 },
-    { q: "لغة التجميع (Assembly) هي:", choices: ["لغة عالية المستوى مثل Python", "تعليمات ثنائية 0 و1 فقط", "تمثيل رمزي قصير للتعليمات الثنائية ويحوّلها Assembler", "لغة لا تحتاج أي محول"], correct: 2, explain: "Assembly تمثيل رمزي للتعليمات الثنائية ويحولها Assembler إلى 0 و1.", page: 14 },
-    { q: "المفسر Interpreter يقوم بـ:", choices: ["ترجمة البرنامج كاملًا ثم تنفيذه", "قراءة تعليمة واحدة وترجمتها وتنفيذها مباشرة", "حذف الأخطاء نهائيًا", "تشغيل الطابعة"], correct: 1, explain: "المفسر يقرأ تعليمة واحدة ثم يترجمها وينفذها مباشرة.", page: 18 },
-    { q: "المترجم Compiler يقوم بـ:", choices: ["تنفيذ تعليمة واحدة فقط", "ترجمة البرنامج كاملًا إلى لغة الآلة ثم تنفيذه", "قراءة إدخال المستخدم", "كتابة تعليقات فقط"], correct: 1, explain: "المترجم يترجم البرنامج كاملًا ثم يتم تنفيذ الناتج.", page: 18 },
-    { q: "الخوارزميات هي سلسلة خطوات يمكن اتباعها لإيجاد الحل المطلوب.", choices: ["صح", "خطأ"], correct: 0, explain: "الخوارزميات سلسلة خطوات لإيجاد الحل المطلوب.", page: 8 },
-    { q: "من مكونات الحاسب الأساسية كما وردت في المنهج:", choices: ["الإدخال والمعالجة والتخزين والمخرجات", "المتصفح فقط", "الطابعة فقط", "برنامج Word"], correct: 0, explain: "المكونات: Input / Processing / Memory & Storage / Output.", page: 6 },
-    { q: "من أمثلة أجهزة الإدخال في المنهج:", choices: ["الطابعة", "لوحة المفاتيح والفأرة والميكروفون وشاشة اللمس", "السماعات فقط", "ملفات الإخراج"], correct: 1, explain: "أمثلة الإدخال: لوحة المفاتيح، الفأرة، الميكروفون، شاشة اللمس.", page: 6 },
-    { q: "وحدة المعالجة المركزية (CPU) هي قلب تنفيذ أوامر البرامج وتقوم بالحسابات واتخاذ القرارات.", choices: ["صح", "خطأ"], correct: 0, explain: "CPU تنفذ التعليمات وتقوم بالحسابات واتخاذ القرارات.", page: 6 },
-    { q: "الذاكرة الرئيسية سريعة وقريبة من المعالج لكنها تخزين مؤقت يزول بانقطاع الطاقة.", choices: ["صح", "خطأ"], correct: 0, explain: "المحتوى يزول بانقطاع الطاقة (تخزين مؤقت).", page: 6 },
-    { q: "الذاكرة الثانوية أبطأ لكنها تحتفظ بالبيانات والبرامج عند إيقاف التشغيل.", choices: ["صح", "خطأ"], correct: 0, explain: "تخزين دائم يحتفظ بالبيانات عند إيقاف التشغيل.", page: 6 },
-    { q: "المخرجات في المنهج تشمل:", choices: ["عرض النتائج على الشاشة وتشغيل الصوت والكتابة إلى ملفات", "الماوس فقط", "الكيبورد فقط", "الذاكرة الرئيسية"], correct: 0, explain: "يعرض النتائج على الشاشة، يشغّل الصوت، ويكتب إلى ملفات.", page: 6 },
-    { q: "Networking يعني نقل البيانات عبر شبكات متصلة وقد يُنظر له كامتداد للتخزين.", choices: ["صح", "خطأ"], correct: 0, explain: "Networking: نقل البيانات عبر شبكات متصلة وقد يُنظر له كامتداد للتخزين.", page: 6 },
-    { q: "من المكونات الأساسية للبرامج كما ورد في المنهج:", choices: ["المدخلات والمخرجات والتسلسل والشرط والتكرار وإعادة الاستخدام", "الشاشة والمعالج فقط", "الإنترنت فقط", "الذاكرة الثانوية فقط"], correct: 0, explain: "المنهج يسرد هذه المكونات الأساسية.", page: 15 },
-    { q: "التنفيذ التسلسلي يعني تنفيذ البرنامج خطوة بعد خطوة.", choices: ["صح", "خطأ"], correct: 0, explain: "التسلسل = خطوة بعد خطوة.", page: 15 },
-    { q: "الشرط يعني تنفيذ تعليمات معينة عند تحقق شرط محدد.", choices: ["صح", "خطأ"], correct: 0, explain: "الشرط = تنفيذ عند تحقق شرط.", page: 15 },
-    { q: "التكرار يعني تكرار تنفيذ تعليمات عددًا من المرات أو حتى يتحقق شرط معين.", choices: ["صح", "خطأ"], correct: 0, explain: "التكرار = تكرار لعدد مرات أو حتى شرط.", page: 15 },
-    { q: "إعادة الاستخدام تعني تجميع التعليمات في دوال قابلة لإعادة الاستدعاء بدل تكرار الكود.", choices: ["صح", "خطأ"], correct: 0, explain: "إعادة الاستخدام = دوال قابلة لإعادة الاستدعاء.", page: 15 },
-    { q: "بايثون طُورت في معهد CWI وأول إعلان عنها كان عام 1991م.", choices: ["صح", "خطأ"], correct: 0, explain: "المعلومة موجودة في (ما هي بايثون؟).", page: 19 },
-    { q: "نواة لغة بايثون كُتبت بلغة:", choices: ["Java", "C", "Python", "HTML"], correct: 1, explain: "نواة بايثون مكتوبة باستخدام C.", page: 19 },
-    { q: "سبب تسمية بايثون هو إعجاب المطوّر بفرقة Monty Python.", choices: ["صح", "خطأ"], correct: 0, explain: "مذكور صراحة في المنهج.", page: 19 },
-    { q: "من أسباب اختيار بايثون حسب المنهج:", choices: ["صعوبة قواعدها", "تحتاج عددًا أكبر من الأسطر دائمًا", "من أبسط اللغات ويمكن تعلمها بسرعة", "لا تعمل إلا على نظام واحد"], correct: 2, explain: "بساطة القواعد وسهولة التعلم من الأسباب المذكورة.", page: 20 },
-    { q: "بايثون تعمل على جميع أنظمة التشغيل (Windows - Mac - Linux) حسب المنهج.", choices: ["صح", "خطأ"], correct: 0, explain: "مذكور أنها تعمل على جميع أنظمة التشغيل.", page: 20 },
-    { q: "بايثون خيار جيد للمبتدئين لأن شيفرتها سهلة القراءة وموجزة وتزيد الإنتاجية وتقلل الأخطاء.", choices: ["صح", "خطأ"], correct: 0, explain: "هذا مضمون صفحة (لماذا بايثون؟).", page: 21 },
-    { q: "من أشهر الشركات التي تستخدم بايثون حسب المنهج:", choices: ["Yahoo و Google و NASA و Microsoft", "شركة واحدة فقط", "لا توجد شركات تستخدم بايثون", "فقط شركات ألعاب"], correct: 0, explain: "القائمة مذكورة في المنهج.", page: 22 },
-    { q: "في أنظمة Linux أو MacOS تكون بايثون غالبًا مثبتة مسبقًا.", choices: ["صح", "خطأ"], correct: 0, explain: "مذكور أنها مثبتة مسبقًا غالبًا على Linux/Mac.", page: 23 },
-    { q: "على Windows يمكن تحميل بايثون من الموقع الرسمي python.org.", choices: ["صح", "خطأ"], correct: 0, explain: "مذكور التحميل من python.org.", page: 23 },
-    { q: "بعد تثبيت بايثون على Windows يظهر برنامج باسم IDLE والغرض منه:", choices: ["تشغيل ملفات فيديو", "وسيلة للتواصل مع لغة بايثون (بيئة تطوير)", "حذف الفيروسات", "متصفح إنترنت"], correct: 1, explain: "IDLE: بيئة تطوير متكاملة للتواصل مع بايثون.", page: 23 },
-    { q: "Google Colab هو بيئة بايثون جاهزة في المتصفح بدون تثبيت.", choices: ["صح", "خطأ"], correct: 0, explain: "Colab يوفر بيئة بايثون جاهزة عبر المتصفح بدون تثبيت.", page: 24 },
-    { q: "يدعم Google Colab:", choices: ["CPU فقط", "GPU فقط", "CPU / GPU / TPU", "RAM فقط"], correct: 2, explain: "مذكور أنه يدعم CPU/GPU/TPU.", page: 24 },
-    { q: "لتشغيل الكود في Google Colab نضغط:", choices: ["Ctrl + S", "Shift + Enter", "Alt + F4", "Enter فقط"], correct: 1, explain: "مذكور: Shift + Enter للتنفيذ.", page: 24 },
-    { q: "الدالة print تطبع المخرجات على الشاشة.", choices: ["صح", "خطأ"], correct: 0, explain: "print لطباعة المخرجات على الشاشة.", page: 25 },
-    { q: "الدالة input تقرأ إدخال المستخدم وتعيده كنص (String).", choices: ["صح", "خطأ"], correct: 0, explain: "input تعيد الإدخال كنص String.", page: 26 },
-    { q: "من الأخطاء الشائعة في المنهج: SyntaxError مثال primt بدل print، وNameError عند استخدام متغير غير معرّف.", choices: ["العبارة صحيحة", "العبارة خاطئة"], correct: 0, explain: "هذا مذكور في صفحة الأخطاء الشائعة في المنهج.", page: 30 }
+    // ---------- MCQ (1–20) ----------
+    {
+      q: "علم الإحصاء هو العلم الذي يهتم بـ:",
+      choices: ["تصميم المواقع", "جمع وتنظيم وتحليل البيانات", "البرمجة فقط", "إدارة المشاريع"],
+      correct: 1,
+      explain: "الإحصاء يهتم بجمع البيانات وتنظيمها وتحليلها للوصول إلى نتائج مفيدة."
+    },
+    {
+      q: "من وظائف علم الإحصاء:",
+      choices: ["نشر النتائج", "تفسير النتائج", "تحليل البيانات", "جميع ما سبق"],
+      correct: 3,
+      explain: "يشمل الإحصاء تحليل البيانات وتفسير النتائج وعرضها/نشرها."
+    },
+    {
+      q: "المجتمع الإحصائي يتميز بـ:",
+      choices: ["عدد غير محدد من الأفراد", "عدد معروف من الأفراد N", "لا يحتوي على صفات", "لا يستخدم في الدراسات"],
+      correct: 1,
+      explain: "المجتمع الإحصائي غالبًا يُرمز لحجمه بـ N ويُفترض أنه معروف/محدد ضمن الدراسة."
+    },
+    {
+      q: "العينة هي:",
+      choices: ["جميع أفراد المجتمع", "جزء من المجتمع", "أكبر من المجتمع", "لا علاقة لها بالمجتمع"],
+      correct: 1,
+      explain: "العينة جزء من المجتمع نستخدمه للاستدلال على خصائص المجتمع."
+    },
+    {
+      q: "أي مما يلي يعد متغيرًا كميًا؟",
+      choices: ["اللون", "الجنس", "الطول", "المهنة"],
+      correct: 2,
+      explain: "الطول قيمة رقمية قابلة للقياس → متغير كمي."
+    },
+    {
+      q: "أي مما يلي يعد متغيرًا نوعيًا؟",
+      choices: ["الوزن", "عدد الطلاب", "درجة الحرارة", "المهنة"],
+      correct: 3,
+      explain: "المهنة تصنيف/فئة → متغير نوعي."
+    },
+    {
+      q: "المتوسط الحسابي يُحسب عن طريق:",
+      choices: ["أكبر قيمة ناقص أصغر قيمة", "مجموع القيم ÷ عددها", "القيمة الأكثر تكرارًا", "القيمة الوسطى"],
+      correct: 1,
+      explain: "المتوسط = مجموع القيم / عدد القيم."
+    },
+    {
+      q: "الوسيط هو:",
+      choices: ["القيمة الأكثر تكرارًا", "القيمة المتوسطة بعد ترتيب البيانات", "مجموع القيم", "أصغر قيمة"],
+      correct: 1,
+      explain: "الوسيط هو القيمة التي تقع في الوسط بعد ترتيب البيانات."
+    },
+    {
+      q: "المنوال هو:",
+      choices: ["القيمة المتوسطة", "القيمة الأكثر تكرارًا", "الفرق بين القيم", "مجموع الانحرافات"],
+      correct: 1,
+      explain: "المنوال هو أكثر قيمة تتكرر."
+    },
+    {
+      q: "من عيوب المتوسط الحسابي:",
+      choices: ["لا يتأثر بالقيم الشاذة", "يتأثر بالقيم المتطرفة", "لا يمكن حسابه", "لا يستخدم في المقارنات"],
+      correct: 1,
+      explain: "المتوسط يتأثر بالقيم المتطرفة (Outliers)."
+    },
+    {
+      q: "المدى يساوي:",
+      choices: ["المتوسط × العدد", "أكبر قيمة – أصغر قيمة", "مجموع القيم", "الجذر التربيعي للمتوسط"],
+      correct: 1,
+      explain: "المدى = Max − Min."
+    },
+    {
+      q: "التباين يقيس:",
+      choices: ["موقع البيانات", "تشتت البيانات حول المتوسط", "أكبر قيمة", "أصغر قيمة"],
+      correct: 1,
+      explain: "التباين يقيس مدى تشتت البيانات حول المتوسط."
+    },
+    {
+      q: "الانحراف المعياري هو:",
+      choices: ["مربع التباين", "نصف التباين", "الجذر التربيعي للتباين", "ضعف المتوسط"],
+      correct: 2,
+      explain: "الانحراف المعياري = √التباين."
+    },
+    {
+      q: "إذا كانت قيمة Z موجبة فهذا يعني أن القيمة:",
+      choices: ["أقل من المتوسط", "تساوي المتوسط", "أكبر من المتوسط", "سالبة"],
+      correct: 2,
+      explain: "Z موجبة → القيمة أعلى من المتوسط."
+    },
+    {
+      q: "المدرج التكراري يستخدم لعرض:",
+      choices: ["البيانات النوعية", "البيانات الكمية المستمرة", "النصوص", "الصور"],
+      correct: 1,
+      explain: "Histogram مناسب للبيانات الكمية المستمرة/المجمعة في فئات."
+    },
+    {
+      q: "في المدرج التكراري تكون الأعمدة:",
+      choices: ["منفصلة", "متباعدة", "متلاصقة", "عشوائية"],
+      correct: 2,
+      explain: "أعمدة المدرج التكراري متلاصقة لأنها تمثل فئات متصلة."
+    },
+    {
+      q: "المخطط الشريطي يستخدم غالبًا لعرض:",
+      choices: ["البيانات النوعية", "البيانات المستمرة فقط", "العلاقات بين متغيرين كميين", "الانحراف المعياري"],
+      correct: 0,
+      explain: "Bar Chart غالبًا للبيانات النوعية/الفئات."
+    },
+    {
+      q: "مخطط التشتت يستخدم لبيان:",
+      choices: ["المتوسط", "العلاقة بين متغيرين", "التكرار", "المنوال"],
+      correct: 1,
+      explain: "Scatter Plot يوضح العلاقة بين متغيرين (عادة كميين)."
+    },
+    {
+      q: "إذا كانت النقاط في مخطط التشتت تتجه من أسفل اليسار إلى أعلى اليمين فالعلاقة:",
+      choices: ["عكسية", "طردية", "لا توجد علاقة", "دائرية"],
+      correct: 1,
+      explain: "اتجاه صاعد يعني علاقة طردية (موجبة)."
+    },
+    {
+      q: "إذا كان الانحراف المعياري صغيرًا فهذا يدل على:",
+      choices: ["تشتت كبير", "عدم وجود بيانات", "تجانس البيانات", "خطأ في الحساب"],
+      correct: 2,
+      explain: "انحراف معياري صغير → البيانات متقاربة/متجانسة."
+    },
+
+    // ---------- True/False (21–30) ----------
+    {
+      q: "جميع العلوم تحتاج إلى الإحصاء لتحليل البيانات.",
+      choices: ["صح", "خطأ"],
+      correct: 0,
+      explain: "الإحصاء أداة أساسية في كثير من المجالات لتحليل البيانات واتخاذ القرار."
+    },
+    {
+      q: "المتوسط الحسابي لا يتأثر بالقيم الشاذة.",
+      choices: ["صح", "خطأ"],
+      correct: 1,
+      explain: "خطأ: المتوسط يتأثر بالقيم المتطرفة/الشاذة."
+    },
+    {
+      q: "الوسيط مناسب عند وجود قيم متطرفة.",
+      choices: ["صح", "خطأ"],
+      correct: 0,
+      explain: "صح: الوسيط أكثر مقاومة للقيم المتطرفة من المتوسط."
+    },
+    {
+      q: "المدى يعتمد فقط على أكبر وأصغر قيمة.",
+      choices: ["صح", "خطأ"],
+      correct: 0,
+      explain: "صح: المدى = أكبر قيمة − أصغر قيمة."
+    },
+    {
+      q: "التباين وحدته نفس وحدة البيانات الأصلية.",
+      choices: ["صح", "خطأ"],
+      correct: 1,
+      explain: "خطأ: التباين بوحدة مربعة (وحدة البيانات)^2."
+    },
+    {
+      q: "الانحراف المعياري أسهل في التفسير من التباين.",
+      choices: ["صح", "خطأ"],
+      correct: 0,
+      explain: "صح: لأنه بنفس وحدة البيانات الأصلية."
+    },
+    {
+      q: "في المخطط الشريطي توجد مسافات بين الأعمدة.",
+      choices: ["صح", "خطأ"],
+      correct: 0,
+      explain: "صح: الأعمدة منفصلة عادة لأنها تمثل فئات."
+    },
+    {
+      q: "المدرج التكراري يستخدم للبيانات الكمية المستمرة.",
+      choices: ["صح", "خطأ"],
+      correct: 0,
+      explain: "صح: المدرج التكراري للبيانات المستمرة/المجمعة في فئات."
+    },
+    {
+      q: "قيمة Z = 0 تعني أن القيمة تساوي المتوسط.",
+      choices: ["صح", "خطأ"],
+      correct: 0,
+      explain: "صح: Z=0 يعني (x-mean)=0 أي x=mean."
+    },
+    {
+      q: "إذا كان التباين كبيرًا فإن البيانات متقاربة.",
+      choices: ["صح", "خطأ"],
+      correct: 1,
+      explain: "خطأ: التباين الكبير يعني تشتت أكبر."
+    },
+
+    // ---------- Converted (31–40) to MCQ only ----------
+    {
+      q: "أفضل تعريف مختصر لعلم الإحصاء هو:",
+      choices: [
+        "علم تصميم المواقع",
+        "علم جمع وتنظيم وتحليل وتفسير البيانات",
+        "علم كتابة البرامج",
+        "علم بناء قواعد البيانات فقط"
+      ],
+      correct: 1,
+      explain: "التعريف الأشمل: جمع وتنظيم وتحليل وتفسير البيانات."
+    },
+    {
+      q: "أي خيار يمثل مصدرين شائعين للحصول على البيانات؟",
+      choices: [
+        "التجارب والمسوحات",
+        "الطابعة والسماعات",
+        "اللون والطول",
+        "المتوسط والمنوال"
+      ],
+      correct: 0,
+      explain: "البيانات تُجمع غالبًا عبر مسوح/استبيانات أو تجارب أو سجلات."
+    },
+    {
+      q: "أي زوج يُعد من أنواع العينات العشوائية؟",
+      choices: [
+        "العينة العشوائية البسيطة والعينة الطبقية",
+        "العينة القصدية والعينة المريحة",
+        "العينة الشخصية والعينة الإعلامية",
+        "عينة الصور وعينة النصوص"
+      ],
+      correct: 0,
+      explain: "من أشهر العينات العشوائية: بسيطة، طبقية، عنقودية، منتظمة."
+    },
+    {
+      q: "الفرق الصحيح بين المجتمع والعينة هو:",
+      choices: [
+        "العينة أكبر من المجتمع",
+        "المجتمع جزء من العينة",
+        "المجتمع كل الأفراد، والعينة جزء ممثل منه",
+        "لا يوجد فرق"
+      ],
+      correct: 2,
+      explain: "المجتمع = كل الأفراد/العناصر، العينة = جزء ممثل."
+    },
+    {
+      q: "إذا كانت القيم: 5 ، 7 ، 9 فإن المتوسط الحسابي يساوي:",
+      choices: ["7", "8", "6", "9"],
+      correct: 0,
+      explain: "المتوسط = (5+7+9)/3 = 21/3 = 7."
+    },
+    {
+      q: "إذا كانت القيم: 2 ، 4 ، 6 ، 8 فإن الوسيط يساوي:",
+      choices: ["4", "6", "5", "8"],
+      correct: 2,
+      explain: "عدد القيم زوجي → الوسيط = (4+6)/2 = 5."
+    },
+    {
+      q: "إذا كانت القيم: 3 ، 3 ، 5 ، 7 فإن المنوال يساوي:",
+      choices: ["3", "5", "7", "لا يوجد منوال"],
+      correct: 0,
+      explain: "القيمة الأكثر تكرارًا هي 3."
+    },
+    {
+      q: "إذا كانت أصغر قيمة = 10 وأكبر قيمة = 25 فإن المدى يساوي:",
+      choices: ["15", "35", "25", "10"],
+      correct: 0,
+      explain: "المدى = 25 − 10 = 15."
+    },
+    {
+      q: "الهدف الأساسي من استخدام مخطط التشتت هو:",
+      choices: [
+        "إيجاد المنوال",
+        "بيان العلاقة بين متغيرين",
+        "حساب الانحراف المعياري",
+        "عرض بيانات نوعية فقط"
+      ],
+      correct: 1,
+      explain: "مخطط التشتت يوضح شكل/اتجاه العلاقة بين متغيرين."
+    },
+    {
+      q: "أي خيار يمثل شكلين شائعين للتوزيعات التي تُدرس عادة؟",
+      choices: [
+        "متماثل ومنحرف",
+        "مربع ومثلث",
+        "أحمر وأزرق",
+        "طابعة وماوس"
+      ],
+      correct: 0,
+      explain: "من الأشكال الشائعة: توزيع متماثل (Symmetric) وتوزيع منحرف (Skewed)."
+    }
   ];
 
-  // ----- Quiz State -----
+  // ===== Quiz State =====
   var currentIndex = 0;
   var score = 0;
   var answered = false;
 
+  // ===== Helpers =====
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, function (ch) {
       if (ch === "&") return "&amp;";
@@ -112,13 +345,13 @@ document.addEventListener("DOMContentLoaded", function () {
     if (state === "correct") {
       btn.style.background = "rgba(46, 204, 113, .25)";
       btn.style.border = "1px solid rgba(46, 204, 113, .75)";
-    }
-    if (state === "wrong") {
+    } else if (state === "wrong") {
       btn.style.background = "rgba(231, 76, 60, .25)";
       btn.style.border = "1px solid rgba(231, 76, 60, .75)";
     }
   }
 
+  // ===== Render =====
   function renderQuestion() {
     answered = false;
     btnNext.disabled = true;
@@ -126,17 +359,28 @@ document.addEventListener("DOMContentLoaded", function () {
     var q = questions[currentIndex];
 
     elAnswers.innerHTML = "";
+
     elQuestion.innerHTML =
       '<div style="text-align:right;">' +
-      "<strong>سؤال " + (currentIndex + 1) + " من " + questions.length + ":</strong> " +
+      "<strong>سؤال " +
+      (currentIndex + 1) +
+      " من " +
+      questions.length +
+      ":</strong> " +
       escapeHtml(q.q) +
       "</div>";
 
     elResult.innerHTML =
       '<div style="text-align:right; line-height:1.9;">' +
-      '<div style="font-size:18px;"><strong>الدرجة:</strong> ' + score + " / " + questions.length + "</div>" +
-      '<div style="opacity:.85;">اختر إجابة لعرض التصحيح والشرح ورقم الصفحة.</div>' +
-      '<div style="opacity:.85; margin-top:6px;">رمز الجلسة: <strong>' + sessionCode + "</strong></div>" +
+      '<div style="font-size:18px;"><strong>الدرجة:</strong> ' +
+      score +
+      " / " +
+      questions.length +
+      "</div>" +
+      '<div style="opacity:.85;">اختر إجابة لعرض التصحيح والشرح.</div>' +
+      '<div style="opacity:.85; margin-top:6px;">رمز الجلسة: <strong>' +
+      sessionCode +
+      "</strong></div>" +
       "</div>";
 
     for (var i = 0; i < q.choices.length; i++) {
@@ -152,7 +396,8 @@ document.addEventListener("DOMContentLoaded", function () {
       })(i);
     }
 
-    btnNext.textContent = (currentIndex === questions.length - 1) ? "عرض النتيجة النهائية" : "السؤال التالي";
+    btnNext.textContent =
+      currentIndex === questions.length - 1 ? "عرض النتيجة النهائية" : "السؤال التالي";
   }
 
   function handleAnswer(selectedIdx) {
@@ -170,18 +415,29 @@ document.addEventListener("DOMContentLoaded", function () {
       if (i === selectedIdx && i !== correctIdx) styleBtn(buttons[i], "wrong");
     }
 
-    var isCorrect = (selectedIdx === correctIdx);
+    var isCorrect = selectedIdx === correctIdx;
     if (isCorrect) score++;
 
     elResult.innerHTML =
       '<div style="text-align:right; line-height:1.95; padding:12px; border-radius:12px;' +
       'border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06);">' +
-      '<div style="font-size:18px;"><strong>الدرجة:</strong> ' + score + " / " + questions.length + "</div>" +
-      '<div style="margin-top:6px;"><strong>النتيجة:</strong> ' + (isCorrect ? "✅ إجابة صحيحة" : "❌ إجابة خاطئة") + "</div>" +
-      '<div style="margin-top:10px;"><strong>الإجابة الصحيحة:</strong> ' + escapeHtml(q.choices[correctIdx]) + "</div>" +
-      '<div style="margin-top:10px;"><strong>الشرح:</strong> ' + escapeHtml(q.explain) + "</div>" +
-      '<div style="margin-top:10px;"><strong>رقم الصفحة في المنهج:</strong> ' + q.page + "</div>" +
-      '<div style="margin-top:8px; opacity:.85;"><strong>رمز الجلسة:</strong> ' + sessionCode + "</div>" +
+      '<div style="font-size:18px;"><strong>الدرجة:</strong> ' +
+      score +
+      " / " +
+      questions.length +
+      "</div>" +
+      '<div style="margin-top:6px;"><strong>النتيجة:</strong> ' +
+      (isCorrect ? "✅ إجابة صحيحة" : "❌ إجابة خاطئة") +
+      "</div>" +
+      '<div style="margin-top:10px;"><strong>الإجابة الصحيحة:</strong> ' +
+      escapeHtml(q.choices[correctIdx]) +
+      "</div>" +
+      '<div style="margin-top:10px;"><strong>الشرح:</strong> ' +
+      escapeHtml(q.explain) +
+      "</div>" +
+      '<div style="margin-top:8px; opacity:.85;"><strong>رمز الجلسة:</strong> ' +
+      sessionCode +
+      "</div>" +
       "</div>";
 
     btnNext.disabled = false;
@@ -198,21 +454,18 @@ document.addEventListener("DOMContentLoaded", function () {
       '<div style="text-align:center; line-height:2; padding:14px; border-radius:12px;' +
       'border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06);">' +
       '<div style="font-size:20px;"><strong>الدرجة النهائية</strong></div>' +
-      '<div style="font-size:34px; margin:6px 0;"><strong>' + score + " / " + questions.length + "</strong></div>" +
-      '<div style="font-size:18px;">' + percent + "%</div>" +
-      '<div style="margin-top:10px; opacity:.9;">رمز الجلسة (بدون اسم): <strong>' + sessionCode + "</strong></div>" +
-      '<button id="restartBtn" style="margin-top:12px; padding:10px 16px; border-radius:10px;' +
-      'border:1px solid rgba(255,255,255,.18); background:rgba(255,255,255,.10); color:#fff; cursor:pointer;">' +
-      "إعادة الاختبار</button>" +
+      '<div style="font-size:34px; margin:6px 0;"><strong>' +
+      score +
+      " / " +
+      questions.length +
+      "</strong></div>" +
+      '<div style="font-size:18px;">' +
+      percent +
+      "%</div>" +
+      '<div style="margin-top:10px; opacity:.9;">رمز الجلسة: <strong>' +
+      sessionCode +
+      "</strong></div>" +
       "</div>";
-
-    document.getElementById("restartBtn").addEventListener("click", function () {
-      currentIndex = 0;
-      score = 0;
-      btnNext.style.display = "inline-block";
-      btnNext.disabled = true;
-      renderQuestion();
-    });
   }
 
   btnNext.addEventListener("click", function () {
@@ -222,6 +475,7 @@ document.addEventListener("DOMContentLoaded", function () {
       showFinal();
       return;
     }
+
     currentIndex++;
     renderQuestion();
   });
@@ -229,3 +483,4 @@ document.addEventListener("DOMContentLoaded", function () {
   // Start
   renderQuestion();
 });
+```0
